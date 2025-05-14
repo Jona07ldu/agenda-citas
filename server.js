@@ -3,20 +3,23 @@ const bodyParser = require("body-parser");
 const path = require("path");
 const admin = require("firebase-admin");
 
+// Cargar las credenciales de Firebase desde el archivo JSON
+const serviceAccount = require('./firebase-config.json');  // <-- Aquí
+
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Configuración de Firebase
-const serviceAccount = require("./firebase-config.json");
+// Inicializar Firebase
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount)
 });
+
 const db = admin.firestore();
 
 app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, "public")));
 
-// Obtener todas las citas (para el calendario)
+// Obtener citas
 app.get("/api/citas", async (req, res) => {
   const snapshot = await db.collection("citas").get();
   const citas = snapshot.docs.map(doc => doc.data());
@@ -27,7 +30,6 @@ app.get("/api/citas", async (req, res) => {
 app.post("/api/cita", async (req, res) => {
   const { nombre, telefono, fecha } = req.body;
 
-  // Validar si ya hay cita ese día y hora
   const snapshot = await db.collection("citas")
     .where("fecha", "==", fecha)
     .get();
