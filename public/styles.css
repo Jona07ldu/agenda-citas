@@ -1,0 +1,90 @@
+body {
+  font-family: 'Segoe UI', sans-serif;
+  background: #f5f0fa;
+  color: #4c0070;
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  max-width: 700px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+h1 {
+  text-align: center;
+  color: #7c3aed;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+input, button {
+  padding: 0.8rem;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+}
+
+input {
+  border: 1px solid #ccc;
+}
+
+button {
+  background-color: #7c3aed;
+  color: white;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+button:hover {
+  background-color: #6d28d9;
+}
+
+#calendar {
+  margin-top: 2rem;
+}
+input[type="datetime-local"] {
+  font-size: 16px;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  width: 100%;
+}
+
+input[type="datetime-local"]:focus {
+  border-color: #5a3d96; /* Color violeta al enfocarse */
+  outline: none;
+}
+input[type="datetime-local"] {
+  font-size: 16px;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  width: 100%;
+}
+
+input[type="datetime-local"]:focus {
+  border-color: #5a3d96; /* Color violeta al enfocarse */
+  outline: none;
+}
+
+input[type="datetime-local"] {
+    font-size: 16px;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    width: 100%;
+  }
+  
+  input[type="datetime-local"]:focus {
+    border-color: #5a3d96; /* Color violeta al enfocarse */
+    outline: none;
+  }
+  
+
