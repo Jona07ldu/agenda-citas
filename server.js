@@ -4,7 +4,7 @@ const path = require("path");
 const admin = require("firebase-admin");
 
 // Cargar las credenciales de Firebase desde el archivo JSON
-const serviceAccount = require('./firebase-config.json');  // <-- Aquí
+const serviceAccount = JSON.parse(process.env.FIREBASE_CREDENTIALS);  // <-- Aquí
 
 const app = express();
 const PORT = process.env.PORT || 3000;
