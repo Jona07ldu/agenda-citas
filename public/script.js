@@ -10,7 +10,7 @@ function poblarHoras(inicio = "09:00", fin = "18:00", intervaloMin = 30) {
   };
 
   const inicioMin = toMinutos(inicio);
-  const finMin    = toMinutos(fin);
+  const finMin = toMinutos(fin);
 
   for (let t = inicioMin; t < finMin; t += intervaloMin) {
     const h = String(Math.floor(t / 60)).padStart(2, "0");
@@ -50,18 +50,17 @@ async function defineCalendar() {
 async function handleSubmit(e) {
   e.preventDefault();
 
-  const nombre   = document.getElementById("nombre").value.trim();
+  const nombre = document.getElementById("nombre").value.trim();
   const telefono = document.getElementById("telefono").value.trim();
   const servicio = document.getElementById("servicio").value.trim();
-  const fecha    = document.getElementById("fecha").value; // YYYY-MM-DD
-  const hora     = document.getElementById("hora").value;    // HH:MM
+  const fecha = document.getElementById("fecha").value;
+  const hora = document.getElementById("hora").value;
 
   if (!fecha || !hora) {
     alert('Por favor selecciona fecha y hora.');
     return;
   }
 
-  // Combina fecha y hora en ISO compatible con Firebase
   const fechaHoraISO = new Date(`${fecha}T${hora}:00`).toISOString();
 
   try {
@@ -70,23 +69,34 @@ async function handleSubmit(e) {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ nombre, telefono, servicio, fecha: fechaHoraISO }),
     });
+
     const data = await res.json();
     if (!res.ok) throw new Error(data.error || 'Error al registrar cita');
 
-    // Refrescar calendario con nueva cita
-    await defineCalendar();
+    // Mensaje para WhatsApp
+    const fechaFormateada = new Date(fechaHoraISO).toLocaleString("es-EC", {
+      dateStyle: "full",
+      timeStyle: "short"
+    });
 
-    alert('✅ ' + data.message);
+    const mensaje = `Hola, mi nombre es ${nombre} y deseo agendar una cita para el servicio de ${servicio} el día ${fechaFormateada}. Mi número de contacto es ${telefono}.`;
+
+    const whatsappURL = `https://wa.me/593984235123?text=${encodeURIComponent(mensaje)}`;
+    window.open(whatsappURL, "_blank");
+
+    // Refrescar calendario
+    await defineCalendar();
+    alert('✅ Cita registrada correctamente y enviada por WhatsApp.');
     document.getElementById('formulario').reset();
+
   } catch (err) {
     alert('⚠️ ' + err.message);
   }
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-  // Verificar que FullCalendar esté cargado
   if (typeof FullCalendar === 'undefined') {
-    console.error('FullCalendar no está definido. Asegúrate de importar fullcalendar/main.min.js antes de este script.');
+    console.error('FullCalendar no está definido. Revisa la importación del script de FullCalendar.');
     return;
   }
 
