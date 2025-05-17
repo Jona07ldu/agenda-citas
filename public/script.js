@@ -1,5 +1,5 @@
 // Genera las opciones de hora cada 30 minutos entre hora de inicio y fin
-function poblarHoras(inicio = "09:00", fin = "18:00", intervaloMin = 30) {
+function poblarHoras(inicio = "09:00", fin = "18:00", intervaloMin = 60) {
   const selectHora = document.getElementById("hora");
   selectHora.innerHTML = ""; // limpia opciones previas
 
