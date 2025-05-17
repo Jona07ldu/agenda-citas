@@ -84,6 +84,12 @@ async function handleSubmit(e) {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
+  // Verificar que FullCalendar esté cargado
+  if (typeof FullCalendar === 'undefined') {
+    console.error('FullCalendar no está definido. Asegúrate de importar fullcalendar/main.min.js antes de este script.');
+    return;
+  }
+
   poblarHoras();
   defineCalendar();
   document.getElementById("formulario").addEventListener("submit", handleSubmit);
